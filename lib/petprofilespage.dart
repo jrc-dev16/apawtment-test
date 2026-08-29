@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apawtmentweb_admin/skeleton_loading.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 
@@ -1125,6 +1126,7 @@ class _ShelterProfilesPageState extends State<ShelterProfilesPage> {
 
   Future<void> _loadShelterData() async {
 
+    if (!mounted) return;
     setState(() => _isLoading = true);
 
     try {
@@ -1177,6 +1179,8 @@ class _ShelterProfilesPageState extends State<ShelterProfilesPage> {
 
       }
 
+      if (!mounted) return;
+
       setState(() {
 
         _shelters = sheltersWithCounts;
@@ -1189,6 +1193,7 @@ class _ShelterProfilesPageState extends State<ShelterProfilesPage> {
 
       debugPrint('Error loading shelter data: $e');
 
+      if (!mounted) return;
       setState(() => _isLoading = false);
 
     }
@@ -8399,12 +8404,7 @@ class _ShelterPetsDetailPageState extends State<ShelterPetsDetailPage>
   Widget _buildPetGrid() {
 
     if (isLoading) {
-      return Center(
-        child: LoadingAnimationWidget.fallingDot(
-          color: Colors.orange,
-          size: 50,
-        ),
-      );
+      return const SkeletonPetTable();
     }
 
     if (_filteredPets.isEmpty) {

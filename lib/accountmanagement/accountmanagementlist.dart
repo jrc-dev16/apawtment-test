@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:apawtmentweb_admin/accountmanagement/accountmanagementpage.dart';
+import 'package:apawtmentweb_admin/skeleton_loading.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:apawtmentweb_admin/activitylogs.dart';
 import 'package:apawtmentweb_admin/appointment/appointmentpage.dart';
@@ -538,12 +539,7 @@ class _AccountManagementListPageState extends State<AccountManagementListPage> {
 
   Widget _buildVetApplicationsList(bool isMobile) {
     if (_isLoadingVetApps) {
-      return Center(
-        child: LoadingAnimationWidget.fallingDot(
-          color: Colors.orange,
-          size: 50,
-        ),
-      );
+      return const SkeletonAccountList();
     }
     final active =
         _vetApplications.where((a) => a['is_archived'] != true).toList();
@@ -1942,12 +1938,7 @@ class _AccountManagementListPageState extends State<AccountManagementListPage> {
     final isMobile = MediaQuery.of(context).size.width < 800;
 
     if (isLoading) {
-      return Center(
-        child: LoadingAnimationWidget.fallingDot(
-          color: Colors.orange,
-          size: 50,
-        ),
-      );
+      return const SkeletonAccountList();
     }
 
     final pendingVets =
@@ -2168,12 +2159,7 @@ class _AccountManagementListPageState extends State<AccountManagementListPage> {
 
   Widget _buildArchivedVetList(bool isMobile) {
     if (_isLoadingArchivedVets) {
-      return Center(
-        child: LoadingAnimationWidget.fallingDot(
-          color: Colors.orange,
-          size: 50,
-        ),
-      );
+      return const SkeletonAccountList();
     }
     if (_archivedVetApplications.isEmpty) {
       return const Center(
@@ -2603,12 +2589,7 @@ class _AccountManagementListPageState extends State<AccountManagementListPage> {
 
   Widget _buildArchivedSubadminList(bool isMobile) {
     if (_isLoadingArchived) {
-      return Center(
-        child: LoadingAnimationWidget.fallingDot(
-          color: Colors.orange,
-          size: 50,
-        ),
-      );
+      return const SkeletonAccountList();
     }
     if (_archivedAccounts.isEmpty) {
       return const Center(

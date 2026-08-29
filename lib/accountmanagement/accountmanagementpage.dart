@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:apawtmentweb_admin/accountmanagement/accountmanagementlist.dart';
+import 'package:apawtmentweb_admin/skeleton_loading.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:apawtmentweb_admin/activitylogs.dart';
 import 'package:apawtmentweb_admin/appointment/appointmentpage.dart';
@@ -639,12 +640,7 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
                   Expanded(
                     child:
                         _isLoading
-                            ? Center(
-                                child: LoadingAnimationWidget.fallingDot(
-                                  color: Colors.orange,
-                                  size: 50,
-                                ),
-                              )
+                            ? const SkeletonAccountDetail()
                             : _selectedAccount == null
                             ? const Center(
                               child: Text(

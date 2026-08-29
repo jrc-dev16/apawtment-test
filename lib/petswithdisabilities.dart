@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 
 
 import 'package:apawtmentweb_admin/accountmanagement/accountmanagementlist.dart';
+import 'package:apawtmentweb_admin/skeleton_loading.dart';
 
 import 'package:apawtmentweb_admin/activitylogs.dart';
 
@@ -85,8 +86,6 @@ class _PetsWithDisabilitiesPageState extends State<PetsWithDisabilitiesPage> {
   String? _cachedProfileImage;
 
   String _selectedItem = 'Pet Management';
-
-  String _hoveredLabel = '';
 
   List<Map<String, dynamic>> _allPets = [];
 
@@ -1469,19 +1468,8 @@ class _PetsWithDisabilitiesPageState extends State<PetsWithDisabilitiesPage> {
                   Expanded(
 
                     child:
-
                         _isLoading
-
-                            ? const Center(
-
-                              child: CircularProgressIndicator(
-
-                                color: Colors.orange,
-
-                              ),
-
-                            )
-
+                            ? const SkeletonPetGrid()
                             : _filteredPets.isEmpty
 
                             ? const Center(
@@ -3771,147 +3759,84 @@ class _PetsWithDisabilitiesPageState extends State<PetsWithDisabilitiesPage> {
 
 
   Widget buildHoverButton({
-
     required String label,
-
     required IconData icon,
-
     required Color color,
-
     required VoidCallback onPressed,
-
     bool wide = false,
-
   }) {
+    bool isHovered = false;
 
-    final bool isHovered = _hoveredLabel == label;
-
-
-
-    return MouseRegion(
-
-      onEnter: (_) => setState(() => _hoveredLabel = label),
-
-      onExit: (_) => setState(() => _hoveredLabel = ''),
-
-      child: GestureDetector(
-
-        onTap: onPressed,
-
-        child: AnimatedContainer(
-
-          duration: const Duration(milliseconds: 200),
-
-          curve: Curves.easeOut,
-
-          decoration: BoxDecoration(
-
-            color: color,
-
-            borderRadius: BorderRadius.circular(10),
-
-          ),
-
-          height: wide ? 65 : 60,
-
-          width: wide ? 250 : 120,
-
-          child: Center(
-
-            child: AnimatedSwitcher(
-
-              duration: const Duration(milliseconds: 300),
-
-              transitionBuilder: (child, animation) {
-
-                final slideAnimation = Tween<Offset>(
-
-                  begin: const Offset(0, 0.3),
-
-                  end: Offset.zero,
-
-                ).animate(
-
-                  CurvedAnimation(parent: animation, curve: Curves.easeOut),
-
-                );
-
-                return FadeTransition(
-
-                  opacity: animation,
-
-                  child: SlideTransition(
-
-                    position: slideAnimation,
-
-                    child: child,
-
-                  ),
-
-                );
-
-              },
-
-              child:
-
-                  isHovered
-
-                      ? Icon(
-
-                        icon,
-
-                        color: Colors.white,
-
-                        size: 26,
-
-                        key: ValueKey('icon_$label'),
-
-                      )
-
-                      : Padding(
-
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-
-                        child: FittedBox(
-
-                          fit: BoxFit.scaleDown,
-
-                          child: Text(
-
-                            label,
-
-                            key: ValueKey('text_$label'),
-
-                            style: const TextStyle(
-
-                              color: Colors.white,
-
-                              fontSize: 14,
-
-                              fontWeight: FontWeight.w600,
-
-                              fontFamily: 'Montserrat',
-
-                            ),
-
-                            textAlign: TextAlign.center,
-
-                          ),
-
-                        ),
-
+    return StatefulBuilder(
+      builder: (context, setLocalState) {
+        return MouseRegion(
+          onEnter: (_) {
+            if (mounted) setLocalState(() => isHovered = true);
+          },
+          onExit: (_) {
+            if (mounted) setLocalState(() => isHovered = false);
+          },
+          child: GestureDetector(
+            onTap: onPressed,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOut,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              height: wide ? 65 : 60,
+              width: wide ? 250 : 120,
+              child: Center(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    final slideAnimation = Tween<Offset>(
+                      begin: const Offset(0, 0.3),
+                      end: Offset.zero,
+                    ).animate(
+                      CurvedAnimation(parent: animation, curve: Curves.easeOut),
+                    );
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: slideAnimation,
+                        child: child,
                       ),
-
+                    );
+                  },
+                  child:
+                      isHovered
+                          ? Icon(
+                            icon,
+                            color: Colors.white,
+                            size: 26,
+                            key: ValueKey('icon_$label'),
+                          )
+                          : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                label,
+                                key: ValueKey('text_$label'),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Montserrat',
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                ),
+              ),
             ),
-
           ),
-
-        ),
-
-      ),
-
+        );
+      },
     );
-
   }
 
 
@@ -4516,7 +4441,7 @@ class _PetsWithDisabilitiesPageState extends State<PetsWithDisabilitiesPage> {
           ),
         ),
         const SizedBox(width: 6),
-        statusDropdown,
+        SizedBox(width: 180, child: statusDropdown),
       ],
     );
 
@@ -4533,7 +4458,7 @@ class _PetsWithDisabilitiesPageState extends State<PetsWithDisabilitiesPage> {
           ),
         ),
         const SizedBox(width: 6),
-        ageDropdown,
+        SizedBox(width: 120, child: ageDropdown),
       ],
     );
 

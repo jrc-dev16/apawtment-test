@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:apawtmentweb_admin/accountmanagement/accountmanagementlist.dart';
+import 'package:apawtmentweb_admin/skeleton_loading.dart';
 import 'package:apawtmentweb_admin/activitylogs.dart';
 import 'package:apawtmentweb_admin/appointment/appointmentpage.dart';
 import 'package:apawtmentweb_admin/approvalpage.dart';
@@ -1104,9 +1105,7 @@ class _PetAdoptionsPageState extends State<PetAdoptionsPage>
 
   Widget _buildPetRecordsView(bool isDesktop) {
     if (_loadingPets) {
-      return const Center(
-        child: CircularProgressIndicator(color: Colors.orange),
-      );
+      return const SkeletonPetTable();
     }
 
     return Column(
@@ -4322,9 +4321,7 @@ class _PetAdoptionsPageState extends State<PetAdoptionsPage>
     required String type,
   }) {
     if (isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(color: Colors.orange),
-      );
+      return const SkeletonApprovalList();
     }
     if (items.isEmpty) {
       return _emptyState('No $type adoptions', Icons.inbox_outlined);

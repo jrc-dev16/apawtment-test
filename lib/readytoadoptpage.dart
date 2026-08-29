@@ -1,5 +1,5 @@
 import 'package:apawtmentweb_admin/accountmanagement/accountmanagementlist.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:apawtmentweb_admin/skeleton_loading.dart';
 import 'package:apawtmentweb_admin/activitylogs.dart';
 import 'package:apawtmentweb_admin/appointment/appointmentpage.dart';
 import 'package:apawtmentweb_admin/approvalpage.dart';
@@ -1011,12 +1011,7 @@ class _ReadyToAdoptPageState extends State<ReadyToAdoptPage> {
     ];
 
     if (isLoading) {
-      return Center(
-        child: LoadingAnimationWidget.fallingDot(
-          color: Colors.orange,
-          size: 50,
-        ),
-      );
+      return const SkeletonPetTable();
     }
 
     if (_filteredPets.isEmpty) {

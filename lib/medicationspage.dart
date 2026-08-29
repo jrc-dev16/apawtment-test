@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:apawtmentweb_admin/accountmanagement/accountmanagementlist.dart';
+import 'package:apawtmentweb_admin/skeleton_loading.dart';
 import 'package:apawtmentweb_admin/activitylogs.dart';
 import 'package:apawtmentweb_admin/appointment/appointmentpage.dart';
 import 'package:apawtmentweb_admin/approvalpage.dart';
@@ -1151,9 +1152,7 @@ class _MedicationListPageState extends State<MedicationListPage> {
 
   Widget _buildPetGrid() {
     if (isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(color: Colors.orange),
-      );
+      return const SkeletonPetGrid();
     }
     if (petsUnderMedication.isEmpty) {
       return const Center(
