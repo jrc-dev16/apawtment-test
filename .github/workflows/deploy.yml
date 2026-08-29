@@ -6,13 +6,11 @@ on:
       - main
   workflow_dispatch:
 
-# Grant permissions required for native GitHub Pages deployment
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
 concurrency:
   group: 'pages'
   cancel-in-progress: true
@@ -31,12 +29,19 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          cache: true
+
+      - name: Create environment files if missing
+        run: |
+          touch .env
+          mkdir -p assets
+          touch assets/env
 
       - name: Install dependencies
         run: flutter pub get
 
       - name: Build Flutter Web
-        run: flutter build web --release --base-href "/apawtment-test/"
+        run: flutter build web --release --base-href "/apawtment-test/" --no-tree-shake-icons
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
