@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -29,7 +29,9 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          cache: true
+
+      - name: Enable Flutter Web
+        run: flutter config --enable-web
 
       - name: Create environment files if missing
         run: |
@@ -43,10 +45,13 @@ jobs:
       - name: Build Flutter Web
         run: flutter build web --release --base-href "/apawtment-test/" --no-tree-shake-icons
 
+      - name: Verify build output
+        run: ls -la build/web
+
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'build/web'
+          path: build/web
 
       - name: Deploy to GitHub Pages
         id: deployment
