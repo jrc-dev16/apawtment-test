@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="APawtment Admin Dashboard">
+
+  <!-- Base Href for GitHub Pages fallback -->
+  <script type="text/javascript">
+    // Single Page Application redirect script for GitHub Pages
+    var segmentCount = 0;
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.host + l.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?p=/' +
+      l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
+      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+      l.hash
+    );
+  </script>
+
+  <title>APawtment Admin</title>
+</head>
+<body>
+</body>
+</html>
