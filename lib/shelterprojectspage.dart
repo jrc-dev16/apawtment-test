@@ -3,6 +3,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'dart:io';
 import 'dart:html' as html;
 import 'dart:ui' as ui;
+import 'dart:ui_web' as ui_web;
 import 'package:apawtmentweb_admin/accountmanagement/accountmanagementlist.dart';
 import 'package:apawtmentweb_admin/activitylogs.dart';
 import 'package:apawtmentweb_admin/appointment/appointmentpage.dart';
@@ -2414,7 +2415,7 @@ Widget buildWebImage({
   final viewId = 'net-img-${_viewCounter++}';
 
   // ignore: undefined_prefixed_name
-  ui.platformViewRegistry.registerViewFactory(viewId, (_) {
+  ui_web.platformViewRegistry.registerViewFactory(viewId, (_) {
     final img =
         html.ImageElement()
           ..src = url
